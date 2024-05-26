@@ -20,4 +20,40 @@ class PaginaController extends Controller
     {
         return view('contacto');
     }
+
+
+    public function animeDetails()
+    {
+        return view('components.anime-details');
+    }
+
+    public function animeWatching()
+    {
+        return view('components.anime-watching');
+    }
+
+    public function blogDetails()
+    {
+        return view('components.blog-details');
+    }
+
+    public function blog()
+    {
+        return view('components.blog');
+    }
+
+    public function categories()
+    {
+        return view('components.categories');
+    }
+
+    public function login()
+    {
+        return view('components.login');
+    }
+
+    public function signup()
+    {
+        return view('components.signup');
+    }
 }

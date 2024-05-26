@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+use App\Http\Controllers\PaginaController;
+
+Route::get('/', [PaginaController::class, 'inicio']);
+Route::get('/sobre-nosotros', [PaginaController::class, 'sobreNosotros']);
+Route::get('/contacto', [PaginaController::class, 'contacto']);

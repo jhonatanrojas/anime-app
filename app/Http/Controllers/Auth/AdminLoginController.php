@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AdminLoginController extends Controller
 {
@@ -22,7 +23,7 @@ class AdminLoginController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'email'   => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
 
@@ -33,7 +34,9 @@ class AdminLoginController extends Controller
         }
 
         // Si falla, redirigir de nuevo al login con los datos del formulario
-        return redirect()->back()->withInput($request->only('email', 'remember'));
+        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
+            'email' => 'These credentials do not match our records.',
+        ]);
     }
 
     public function logout(Request $request)

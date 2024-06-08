@@ -1,6 +1,10 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaginaController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AdminLoginController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +33,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::prefix('admin')->group(function() {
+    Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+});

@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+
+
+
 
 class Admin extends Authenticatable
 {
     use Notifiable;
+
+
+    
 
     protected $guard = 'admin';
 
@@ -21,6 +28,6 @@ class Admin extends Authenticatable
 
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = bcrypt($password);
+        $this->attributes['password'] = \Illuminate\Support\Facades\Hash::make($password);
     }
 }

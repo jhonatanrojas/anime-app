@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
 
 class AdminLoginController extends Controller
 {
@@ -26,9 +28,15 @@ class AdminLoginController extends Controller
             'password' => 'required|min:6'
         ]);
 
-        // Intentar iniciar sesión
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            // Si tiene éxito, redirigir a la ubicación prevista
+
+        // Buscar al administrador por email
+        $admin = Admin::where('email', $request->email)->first();
+
+        // Verificar si se encontró el administrador y la contraseña es correcta
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            // Iniciar sesión manualmente
+            Auth::guard('admin')->login($admin);
+            // Redirigir a la ubicación prevista
             return redirect()->intended(route('admin.dashboard'));
         }
 
